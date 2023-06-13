@@ -47,28 +47,15 @@ class Category(models.Model):
 
 class Title(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='titles')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='listings')
     bedrooms = models.PositiveIntegerField(default=0)
     bathrooms = models.PositiveIntegerField(default=0)
     area = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
 
-    def __str__(self):
-        return self.title
-
-    @classmethod
-    def create(cls, category, title, bedrooms=0, bathrooms=0, area=0, location=''):
-        new_title = cls(category=category, title=title, bedrooms=bedrooms, bathrooms=bathrooms, area=area,
-                        location=location)
-        new_title.save()
-        return new_title
-
-
-class Image(models.Model):
     description = models.TextField(null=True, blank=True)
     altText = models.TextField(null=True, blank=True)
     hashtags = models.CharField(null=True, blank=True, max_length=300)
-    title = models.ForeignKey(Title, null=True, blank=True, on_delete=models.CASCADE)
 
     # ImageFields
     squareImage = ResizedImageField(size=[1000, 1000], crop=['middle', 'center'], default='default_square.jpg',
@@ -78,7 +65,7 @@ class Image(models.Model):
     tallImage = ResizedImageField(size=[1618, 2878], crop=['middle', 'center'], default='default_tall.jpg',
                                   upload_to='tall')
 
-    # Utility Variable
+    # Utility Variables
     uniqueId = models.CharField(null=True, blank=True, max_length=100)
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
     date_created = models.DateTimeField(blank=True, null=True)
@@ -99,4 +86,4 @@ class Image(models.Model):
 
         self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
         self.last_updated = timezone.localtime(timezone.now())
-        super(Image, self).save(*args, **kwargs)
+        super(Title, self).save(*args, **kwargs)
