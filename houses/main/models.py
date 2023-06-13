@@ -57,6 +57,10 @@ class Title(models.Model):
     altText = models.TextField(null=True, blank=True)
     hashtags = models.CharField(null=True, blank=True, max_length=300)
 
+    square_feet = models.PositiveIntegerField(default=0)
+    amount = models.CharField(max_length=200, null=True, blank=True)
+    near_location = models.CharField(max_length=200, null=True, blank=True)
+
     # ImageFields
     squareImage = ResizedImageField(size=[1000, 1000], crop=['middle', 'center'], default='default_square.jpg',
                                     upload_to='square')
@@ -84,6 +88,8 @@ class Title(models.Model):
             self.uniqueId = str(uuid4()).split('-')[4]
             self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
 
+        self.category_title = self.category.name  # Capture the category title from ListingType
         self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
         self.last_updated = timezone.localtime(timezone.now())
         super(Title, self).save(*args, **kwargs)
+

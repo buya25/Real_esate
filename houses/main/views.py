@@ -11,4 +11,3 @@ def home(request):
     context = {'categories': categories}
 
     return render(request, 'main/index.html', context)
-
