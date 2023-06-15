@@ -467,7 +467,7 @@ figure {
 #fh5co-primary-menu .fh5co-sub-menu a:hover {
   color: #44C662 !important; }
 
-#fh5co-search-map {
+#fh5co-search-map img{
   width: 100%;
   float: left;
   flex-wrap: wrap;
@@ -476,8 +476,8 @@ figure {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex; }
+  display: -webkit-flex;}
+
 #fh5co-search-map .search-property {
   width: 33.5%;
   float: right;

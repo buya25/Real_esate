@@ -1,3 +1,7 @@
+import json
+
+from django.http import JsonResponse
+from django.urls import path
 from django.shortcuts import render, get_object_or_404
 
 from .models import *
@@ -26,18 +30,38 @@ def category_detail_view(request, slug):
 
 
 def agent_page(request):
-    return render(request, 'main/agent.html')
+    categories = Category.objects.all()
+    agents = Agents.objects.all()
+    context = {'agents': agents, 'categories': categories}
+    return render(request, 'main/agent.html', context)
 
 
 def blog_page(request):
+    categories = Category.objects.all()
     blogs = Blog.objects.all()
-    context = {'blogs': blogs}
+    context = {'blogs': blogs, 'categories': categories}
     return render(request, 'main/blog.html', context)
 
 
+def submit_comment(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    if request.method == 'POST':
+        user_name = request.POST.get('username')
+        comment_text = request.POST.get('comment')
+
+        # Create a new comment object and associate it with the blog
+        comment = Comment(blog=blog, user_name=user_name, comment_text=comment_text)
+        comment.save()
+
+        # Return a JSON response indicating success
+        return render(request, 'main/blog.html')
+
+    # Return a JSON response indicating failure
+    return JsonResponse({'success': False})
+
+
 def contact_page(request):
-    return render(request, 'main/contact.html')
-
-
-def gallery_page(request):
-    return render(request, 'main/gallery.html')
+    categories = Category.objects.all()
+    context = {'categories': categories}
+    return render(request, 'main/contact.html', context)

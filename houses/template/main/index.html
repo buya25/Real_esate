@@ -54,6 +54,14 @@
 
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
+    <style>
+        #fh5co-search-map{
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+    </style>
+
 
     <!-- Modernizr JS -->
     <!--	<script src="{% static 'assets/js/modernizr-2.6.2.min.js' %}"></script>-->
@@ -83,7 +91,8 @@
                                 <ul class="fh5co-sub-menu">
                                     <!--input for category detail-->
                                     {% for category in categories %}
-                                    <li><a href="{% url 'main:category-det' category.slug %}">{{ category.title }}</a></li>
+                                    <li><a href="{% url 'main:category-det' category.slug %}">{{ category.title }}</a>
+                                    </li>
                                     {% endfor %}
 
                                 </ul>
@@ -105,7 +114,7 @@
                 <ul class="slides">
 
                     {% for category in categories %}
-                        {% for title in category.listings.all|slice:":3" %}
+                    {% for title in category.listings.all|slice:":3" %}
 
                     <li style="background-image: url({{ title.squareImage.url }});">
                         <div class="container-fluid">
@@ -130,8 +139,8 @@
                         </div>
                     </li>
 
-                            {% endfor %}
-                        {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
 
 
                 </ul>
@@ -139,105 +148,8 @@
         </aside>
 
         <div id="fh5co-search-map">
-            <div class="search-property">
-                <div class="s-holder">
-                    <h2>Search Properties</h2>
-                    <div class="row">
-                        <div class="col-xxs-12 col-xs-12">
-                            <div class="input-field">
-                                <label for="from">Keyword:</label>
-                                <input type="text" class="form-control" id="from-place" placeholder="Any"/>
-                            </div>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="class">Property Status:</label>
-                                <select class="cs-select cs-skin-border">
-                                    <option value="" disabled selected>Any</option>
-                                    <option value="1">Rent</option>
-                                    <option value="2">Sale</option>
-                                </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="class">Property Type:</label>
-                                <select class="cs-select cs-skin-border input-half" size="5" style="overflow-y: auto;">
-                                    <!--input for details-->
-                                    {% for category in categories %}
-                                    <option value="1">{{ category.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="from">Location:</label>
-                            <select class="cs-select cs-skin-border input-half">
-                                {% for category in categories %}
-                                {% for title in category.listings.all %}
-                                <option value="1">{{ title.location }}</option>
-                                {% endfor %}
-                                {% endfor %}
-                            </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="from">Amount:</label>
-                            <select class="cs-select cs-skin-border input-half">
-                                {% for category in categories %}
-                                {% for title in category.listings.all %}
-                                <option value="1">{{ title.amount }}</option>
-                                {% endfor %}
-                                {% endfor %}
-                            </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="from">Bedrooms:</label>
-                            <select class="cs-select cs-skin-border input-half">
-                                {% for category in categories %}
-                                {% for title in category.listings.all %}
-                                <option value="1">{{ title.bedrooms }}</option>
-                                {% endfor %}
-                                {% endfor %}
-                            </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                             <section>
-                                <label for="from">Bathrooms:</label>
-                            <select class="cs-select cs-skin-border input-half">
-                                {% for category in categories %}
-                                {% for title in category.listings.all %}
-                                <option value="1">{{ title.bathrooms }}</option>
-                                {% endfor %}
-                                {% endfor %}
-                            </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                           <section>
-                                <label for="from">Area:</label>
-                            <select class="cs-select cs-skin-border input-half">
-                                {% for category in categories %}
-                                {% for title in category.listings.all %}
-                                <option value="1">{{ title.area }}</option>
-                                {% endfor %}
-                                {% endfor %}
-                            </select>
-                            </section>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12 text-center">
-                            <p><a class="btn btn-primary btn-lg" href="#">Learn More</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="map" style="background-image: url({% static 'assets/images/cover_bg_1.jpg' %});">
-            </div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/mrpiPK8_up0" frameborder="0"
+                    allowfullscreen></iframe>
         </div>
 
         <div id="fh5co-features">
@@ -318,17 +230,17 @@
 
 
                     {% for category in categories %}
-                        {% for title in category.listings.all|slice:":3" %}
-                            <div class="col-md-4 animate-box">
-                                <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
-                                    <span class="status">{{ title.house_status }}</span>
-                                    <div class="prop-details">
-                                        <span class="price">Ksh {{ title.amount }}</span>
-                                        <h3>Properties Near in {{ title.area }}</h3>
-                                    </div>
-                                </a>
+                    {% for title in category.listings.all|slice:":3" %}
+                    <div class="col-md-4 animate-box">
+                        <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
+                            <span class="status">{{ title.house_status }}</span>
+                            <div class="prop-details">
+                                <span class="price">Ksh {{ title.amount }}</span>
+                                <h3>Properties Near in {{ title.area }}</h3>
                             </div>
-                        {% endfor %}
+                        </a>
+                    </div>
+                    {% endfor %}
                     {% endfor %}
 
 
@@ -347,18 +259,18 @@
                 <div class="row">
 
 
-
-                   {% for user in users|slice:":3" %}
+                    {% for user in users|slice:":3" %}
                     <div class="col-md-4">
                         <div class="box-testimony animate-box">
                             <blockquote>
                                 <span class="quote"><span><i class="icon-quotes-right"></i></span></span>
                                 <p>{{ user.comments|truncatewords_html:20 }}</p>
                             </blockquote>
-                            <p class="author">{{ user.user_name }}, {{user.job_title}} <span class="subtext">{{ user.job_title }}</span></p>
+                            <p class="author">{{ user.user_name }}, {{user.job_title}} <span class="subtext">{{ user.job_title }}</span>
+                            </p>
                         </div>
                     </div>
-                {% endfor %}
+                    {% endfor %}
 
 
                 </div>
@@ -376,30 +288,31 @@
                 </div>
                 <div class="row">
 
-                            <!-- Newest Properties -->
-                            {% for category in categories %}
-                                {% for title in category.listings.all|slice:":6" %}
-                                        <div class="col-md-4 animate-box">
-                                            <div class="property">
-                                                <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
-                                                    <span class="status">{{ title.house_status }}</span>
-                                                    <ul class="list-details">
-                                                        <li>{{ title.square_feet }} ft sq</li>
-                                                        <li>{{ title.bedrooms }} Bedroom</li>
-                                                        <li>{{ title.bathrooms }} Bathroom</li>
-                                                    </ul>
-                                                </a>
-                                                <div class="property-details">
-                                                    <h3>Properties Near {{ title.near_location }}</h3>
-                                                    <span class="price">Ksh {{ title.amount }}</span>
-                                                    <p>{{ title.description|truncatewords_html:20 }}</p>
-                                                    <span class="address"><i class="icon-map"></i>{{ title.area }}, {{ title.location }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {% endfor %}
-                            {% endfor %}
-
+                    <!-- Newest Properties -->
+                    {% for category in categories %}
+                    {% for title in category.listings.all|slice:":6" %}
+                    <div class="col-md-4 animate-box">
+                        <div class="property">
+                            <a href="#" class="fh5co-property"
+                               style="background-image: url({{ title.squareImage.url }});">
+                                <span class="status">{{ title.house_status }}</span>
+                                <ul class="list-details">
+                                    <li>{{ title.square_feet }} ft sq</li>
+                                    <li>{{ title.bedrooms }} Bedroom</li>
+                                    <li>{{ title.bathrooms }} Bathroom</li>
+                                </ul>
+                            </a>
+                            <div class="property-details">
+                                <h3>Properties Near {{ title.near_location }}</h3>
+                                <span class="price">Ksh {{ title.amount }}</span>
+                                <p>{{ title.description|truncatewords_html:20 }}</p>
+                                <span class="address"><i
+                                        class="icon-map"></i>{{ title.area }}, {{ title.location }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
 
 
                 </div>
@@ -444,15 +357,16 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
                         <h3>Recent From Blog</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit est facilis maiores,
-                            perspiciatis accusamus asperiores sint consequuntur debitis.</p>
+                        <p>"Land monopoly is not only monopoly, but it is by far the greatest of monopolies; it is a
+                            perpetual monopoly, and it is the mother of all other forms of monopoly." <br> -Winston
+                            Churchill</p>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <!--Recent Blogs in the system-->
                 <div class="row row-bottom-padded-md">
-                {% for blog in blogs|slice:":3" %}
+                    {% for blog in blogs|slice:":3" %}
 
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="fh5co-blog animate-box">
@@ -471,8 +385,8 @@
 
                     {% endfor %}
                     <div class="clearfix visible-md-block"></div>
-<!--                </div>-->
-            </div>
+                    <!--                </div>-->
+                </div>
             </div>
         </div>
         <!-- fh5co-blog-section -->
@@ -535,7 +449,7 @@
                                 <li><a href="#">Properties</a></li>
                                 <li><a href="#">Agent</a></li>
                                 <li><a href="#">Blog</a></li>
-                                <li><a href="#">API</a></li>
+
                                 <li><a href="#">FAQ / Contact</a></li>
                             </ul>
                         </div>
@@ -597,7 +511,7 @@
 <!-- CS Select -->
 <script src="{% static 'assets/js/classie.js' %}"></script>
 <script src="{% static 'assets/js/selectFx.js' %}"></script>
-
+<script src="{% static 'assets/js/comment.js' %}"></script>
 
 <!-- Main JS -->
 <script src="{% static 'assets/js/main.js' %}"></script>

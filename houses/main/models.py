@@ -118,6 +118,7 @@ class Agents(models.Model):
 
 
 class Blog(models.Model):
+    DoesNotExist = None
     title = models.CharField(max_length=200, default='')
     author = models.CharField(max_length=100, default='Anonymous')
     content = models.TextField(default='')
