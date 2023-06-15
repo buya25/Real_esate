@@ -30,8 +30,14 @@ def agent_page(request):
 
 
 def blog_page(request):
-    return render(request, 'main/blog.html')
+    blogs = Blog.objects.all()
+    context = {'blogs': blogs}
+    return render(request, 'main/blog.html', context)
 
 
 def contact_page(request):
     return render(request, 'main/contact.html')
+
+
+def gallery_page(request):
+    return render(request, 'main/gallery.html')

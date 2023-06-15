@@ -91,6 +91,7 @@
                             <li><a href="{% url 'main:agent' %}">Agent</a></li>
                             <li><a href="{% url 'main:blog' %}">Blog</a></li>
                             <li><a href="{% url 'main:contact' %}">Contact</a></li>
+
                         </ul>
                     </nav>
                 </div>
@@ -450,8 +451,9 @@
             </div>
             <div class="container">
                 <!--Recent Blogs in the system-->
-                {% for blog in blogs|slice:":3" %}
                 <div class="row row-bottom-padded-md">
+                {% for blog in blogs|slice:":3" %}
+
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="fh5co-blog animate-box">
                             <a href="#"><img class="img-responsive" src="images/property-4.jpg" alt=""></a>
@@ -469,7 +471,7 @@
 
                     {% endfor %}
                     <div class="clearfix visible-md-block"></div>
-                </div>
+<!--                </div>-->
             </div>
             </div>
         </div>

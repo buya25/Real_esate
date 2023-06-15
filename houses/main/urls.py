@@ -11,6 +11,7 @@ urlpatterns = [
     path('agent/', views.agent_page, name='agent'),
     path('blog/', views.blog_page, name='blog'),
     path('contact/', views.contact_page, name='contact'),
+    path('gallery/', views.gallery_page, name='gallery'),
 ]
 static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # Add the following line to serve media files
