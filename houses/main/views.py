@@ -45,6 +45,9 @@ def blog_page(request):
 
 def submit_comment(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
+    categories = Category.objects.all()
+    blogs = Blog.objects.all()
+    context = {'blogs': blogs, 'categories': categories}
 
     if request.method == 'POST':
         user_name = request.POST.get('username')
@@ -55,10 +58,10 @@ def submit_comment(request, blog_id):
         comment.save()
 
         # Return a JSON response indicating success
-        return render(request, 'main/blog.html')
+        return render(request, 'main/blog.html', context)
 
-    # Return a JSON response indicating failure
-    return JsonResponse({'success': False})
+    # Make sure you call the error page 404
+    return render(request, blog)
 
 
 def contact_page(request):

@@ -367,7 +367,6 @@
                 <!--Recent Blogs in the system-->
                 <div class="row row-bottom-padded-md">
                     {% for blog in blogs|slice:":3" %}
-
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="fh5co-blog animate-box">
                             <a href="#"><img class="img-responsive" src="images/property-4.jpg" alt=""></a>
@@ -375,15 +374,31 @@
                                 <div class="prod-title">
                                     <h3><a href="#">Properties for sale</a></h3>
                                     <span class="posted_by">{{ blog.publication_date }}</span>
-                                    <span class="comment"><a href="">{{ blog.comments }}<i class="icon-bubble2"></i></a></span>
+                                    <span class="comment">
+													<a href="#" onclick="toggleCommentInput(event, '{{ blog.id }}')">{{ blog.comments }}<i
+                                                            class="icon-bubble2"></i></a>
+												</span>
                                     <p>{{ blog.content|truncatewords_html:20 }}</p>
                                     <p><a href="#">Learn More...</a></p>
+                                    <div class="mb-3" id="comment-input-{{ blog.id }}" style="display: none;">
+                                        <form id="comment-form-{{ blog.id }}" method="POST"
+                                              action="{% url 'main:submit_comment' blog.id %}">
+                                            {% csrf_token %}
+                                            <input type="text" class="form-control" name="username"
+                                                   placeholder="Username"><br>
+                                            <textarea class="form-control" name="comment" rows="3"
+                                                      placeholder="Comment"></textarea>
+                                            <br>
+                                            <button type="submit">Submit</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     {% endfor %}
+
+                    {% csrf_token %}
                     <div class="clearfix visible-md-block"></div>
                     <!--                </div>-->
                 </div>

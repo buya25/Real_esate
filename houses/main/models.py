@@ -136,6 +136,10 @@ class Blog(models.Model):
     related_blogs = models.ManyToManyField('self', blank=True)
     is_published = models.BooleanField(default=False)
 
+    def update_comments_count(self):
+        self.comments = self.blog_comments.count()
+        self.save()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.date_created = timezone.now()
@@ -152,6 +156,16 @@ class Comment(models.Model):
     comment_text = models.TextField(default='')
     pub_date = models.DateTimeField(auto_now_add=True)
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the comment first
+
+        # Update the comments count for the associated blog
+        self.blog.update_comments_count()
+
+        # Update the parent blog's last_updated field
+        self.blog.last_updated = self.pub_date
+        self.blog.save()
 
     def __str__(self):
         return f"{self.user_name} on {self.blog.title}"
