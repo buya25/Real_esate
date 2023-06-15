@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -69,11 +69,11 @@
 
 				<div class="nav-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Home<span>state</span></a></h1>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Discava<span>Properties</span></a></h1>
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="index.html">Home</a></li>
+							<li><a href="{% url 'main:home' %}">Home</a></li>
 							<li>
 								<a href="properties.html" class="fh5co-sub-ddown">Properties</a>
 								<ul class="fh5co-sub-menu">
@@ -84,9 +84,9 @@
 									<li><a href="#">Django &amp; Python</a></li>
 								</ul>
 							</li>
-							<li><a href="agent.html">Agent</a></li>
-							<li><a href="blog.html">Blog</a></li>
-							<li class="active"><a href="contact.html">Contact</a></li>
+							<li><a href="{% url 'main:agent' %}">Agent</a></li>
+                            <li><a href="{% url 'main:blog' %}">Blog</a></li>
+                            <li class="active"><a href="{% url 'main:contact' %}">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -95,7 +95,7 @@
 
 		<!-- end:header-top -->
 
-		<aside id="fh5co-hero" class="js-fullheight">
+			<aside id="fh5co-hero" class="js-fullheight">
 			<div class="flexslider js-fullheight">
 				<ul class="slides">
 			   	<li style="background-image: url(images/img_bg_3.jpg);">
@@ -163,8 +163,12 @@
 				</form>
 			</div>
 		</div>
-		<div id="map" class="fh5co-map"></div>
+		<div id="map" class="fh5co-map">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.794729574023!2d36.78694607369237!3d-1.297876998689792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f113693089ee1%3A0xa607a493d6fedb0d!2sDiscava%20Properties!5e0!3m2!1sen!2ske!4v1686781269571!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+		</div>
 		<!-- fh5co-blog-section -->
+
 
 		<footer>
 			<div id="footer">
@@ -196,20 +200,6 @@
 								<li><a href="#">Contact Us</a></li>
 							</ul>
 						</div>
-						<div class="col-md-3">
-							<h3 class="section-title">Newsletter</h3>
-							<p>Subscribe for our newsletter</p>
-							<form class="form-inline" id="fh5co-header-subscribe">
-								<div class="row">
-									<div class="col-md-12 col-md-offset-0">
-										<div class="form-group">
-											<input type="text" class="form-control" id="email" placeholder="Enter your email">
-											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -238,32 +228,30 @@
 	<!-- jQuery -->
 
 
-	<script src="js/jquery.min.js"></script>
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="{% static 'assets/js/jquery.easing.1.3.js' %}"></script>
 	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
+	<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/sticky.js"></script>
+	<script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'assets/js/sticky.js' %}"></script>
 	<!-- Superfish -->
-	<script src="js/hoverIntent.js"></script>
-	<script src="js/superfish.js"></script>
+	<script src="{% static 'assets/js/hoverIntent.js' %}"></script>
+	<script src="{% static 'assets/js/superfish.js' %}"></script>
 	<!-- Flexslider -->
-	<script src="js/jquery.flexslider-min.js"></script>
+	<script src="{% static 'assets/js/jquery.flexslider-min.js' %}"></script>
 	<!-- Date Picker -->
-	<script src="js/bootstrap-datepicker.min.js"></script>
+	<script src="{% static 'assets/js/bootstrap-datepicker.min.js' %}"></script>
 	<!-- CS Select -->
-	<script src="js/classie.js"></script>
-	<script src="js/selectFx.js"></script>
-	<!-- Google Map -->
+	<script src="{% static 'assets/js/classie.js' %}"></script>
+	<script src="{% static 'assets/js/selectFx.js' %}"></script>
+
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
 	<script src="js/google_map.js"></script>
 
-	
 	<!-- Main JS -->
-	<script src="js/main.js"></script>
-
+	<script src="{% static 'assets/js/main.js' %}"></script>
 	</body>
 </html>
 

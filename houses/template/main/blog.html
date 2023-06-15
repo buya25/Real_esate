@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -68,11 +68,11 @@
 			<div class="container">
 				<div class="nav-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Home<span>state</span></a></h1>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Discava<span>Properties</span></a></h1>
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="index.html">Home</a></li>
+							<li><a href="{% url 'main:home' %}">Home</a></li>
 							<li>
 								<a href="properties.html" class="fh5co-sub-ddown">Properties</a>
 								<ul class="fh5co-sub-menu">
@@ -83,9 +83,9 @@
 									<li><a href="#">Django &amp; Python</a></li>
 								</ul>
 							</li>
-							<li><a href="agent.html">Agent</a></li>
-							<li class="active"><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="{% url 'main:agent' %}">Agent</a></li>
+                            <li class="active"><a href="{% url 'main:blog' %}">Blog</a></li>
+                            <li><a href="{% url 'main:contact' %}">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -114,136 +114,6 @@
 		  	</div>
 		</aside>
 
-		<div id="fh5co-search-map">
-			<div class="search-property">
-				<div class="s-holder">
-					<h2>Search Properties</h2>
-					<div class="row">
-						<div class="col-xxs-12 col-xs-12">
-							<div class="input-field">
-								<label for="from">Keyword:</label>
-								<input type="text" class="form-control" id="from-place" placeholder="Any"/>
-							</div>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Property Status:</label>
-								<select class="cs-select cs-skin-border">
-									<option value="" disabled selected>Any</option>
-									<option value="1">Rent</option>
-									<option value="2">Sale</option>
-								</select>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Property Type:</label>
-								<select class="cs-select cs-skin-border input-half">
-									<option value="" disabled selected>Any</option>
-									<option value="1">Building</option>
-									<option value="2">Office</option>
-								</select>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<div class="input-field">
-								<label for="from">Location:</label>
-								<input type="text" class="form-control" id="from-place" placeholder="Any"/>
-							</div>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Price:</label>
-								<div class="wide">
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-								</div>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Bedrooms:</label>
-								<div class="wide">
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-								</div>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Bathrooms:</label>
-								<div class="wide">
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-								</div>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Area:</label>
-								<div class="wide">
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-								</div>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12">
-							<section>
-								<label for="class">Parking spots:</label>
-								<div class="wide">
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-									<select class="cs-select cs-select-half cs-skin-border input-half">
-										<option value="" disabled selected>Any</option>
-										<option value="1">Building</option>
-										<option value="2">Office</option>
-									</select>
-								</div>
-							</section>
-						</div>
-						<div class="col-xxs-12 col-xs-12 text-center">
-							<p><a class="btn btn-primary btn-lg" href="#">Learn More</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="map" style="background-image: url(images/cover_bg_1.jpg);"></div>
-		</div>
 
 		<div id="fh5co-blog-section" class="fh5co-section-gray">
 			<div class="container">
@@ -378,20 +248,6 @@
 								<li><a href="#">Privacy &amp; Policy</a></li>
 								<li><a href="#">Contact Us</a></li>
 							</ul>
-						</div>
-						<div class="col-md-3">
-							<h3 class="section-title">Newsletter</h3>
-							<p>Subscribe for our newsletter</p>
-							<form class="form-inline" id="fh5co-header-subscribe">
-								<div class="row">
-									<div class="col-md-12 col-md-offset-0">
-										<div class="form-group">
-											<input type="text" class="form-control" id="email" placeholder="Enter your email">
-											<button type="submit" class="btn btn-default"><i class="icon-paper-plane"></i></button>
-										</div>
-									</div>
-								</div>
-							</form>
 						</div>
 					</div>
 					<div class="row">

@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.template.defaultfilters import slugify
 from django_resized import ResizedImageField
@@ -6,16 +7,8 @@ from uuid import uuid4
 from django.urls import reverse
 
 
-class ListingType(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Category(models.Model):
     title = models.CharField(null=True, blank=True, max_length=200)
-    category = models.ForeignKey(ListingType, on_delete=models.CASCADE, related_name='categories', null=True, blank=True)
 
     # Utility Variable
     uniqueId = models.CharField(null=True, blank=True, max_length=100)
@@ -53,6 +46,12 @@ class Title(models.Model):
     area = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
 
+    HOUSE_STATUS_CHOICES = [
+        ('rent', 'Rent'),
+        ('sale', 'Sale'),
+    ]
+    house_status = models.CharField(max_length=10, choices=HOUSE_STATUS_CHOICES, null=True, blank=True)
+
     description = models.TextField(null=True, blank=True)
     altText = models.TextField(null=True, blank=True)
     hashtags = models.CharField(null=True, blank=True, max_length=300)
@@ -79,7 +78,7 @@ class Title(models.Model):
         return '{} {}'.format(self.title, self.uniqueId)
 
     def get_absolute_url(self):
-        return reverse('image-detail', kwargs={'slug': self.slug})
+        return reverse('property-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if self.date_created is None:
@@ -88,8 +87,70 @@ class Title(models.Model):
             self.uniqueId = str(uuid4()).split('-')[4]
             self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
 
-        self.category_title = self.category.name  # Capture the category title from ListingType
         self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
         self.last_updated = timezone.localtime(timezone.now())
         super(Title, self).save(*args, **kwargs)
 
+
+class Client(models.Model):
+    user_name = models.CharField(max_length=200, null=True, blank=True, default='Anonymous')
+    email = models.EmailField(null=True, blank=True, default='')
+    phone_number = models.CharField(max_length=20, null=True, blank=True, default='')
+    comments = models.TextField(null=True, blank=True, default='')
+    job_title = models.CharField(max_length=200, null=True, blank=True, default='')
+    job_desc = models.TextField(null=True, blank=True, default='')
+
+    def __str__(self):
+        return self.user_name
+
+
+class Agents(models.Model):
+    name = models.CharField(max_length=200, default='Agent')
+    description = models.TextField(default='')
+    profile_image = models.ImageField(upload_to='agents', default='default_profile.jpg')
+    twitter_link = models.URLField(blank=True, default='#')
+    facebook_link = models.URLField(blank=True, default='#')
+    instagram_link = models.URLField(blank=True, default='#')
+    youtube_link = models.URLField(blank=True, default='#')
+
+    def __str__(self):
+        return self.name
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200, default='')
+    author = models.CharField(max_length=100, default='Anonymous')
+    content = models.TextField(default='')
+    publication_date = models.DateField(default=timezone.now)
+    categories = models.ManyToManyField('Category', default=None)
+    featured_image = ResizedImageField(size=[1000, 1000], crop=['middle', 'center'], default='default_square.jpg',
+                                       upload_to='square')
+    uniqueId = models.CharField(null=True, blank=True, max_length=100)
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
+    date_created = models.DateTimeField(blank=True, null=True)
+    last_updated = models.DateTimeField(blank=True, null=True)
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
+    comments = models.IntegerField(default=0)
+    related_blogs = models.ManyToManyField('self', blank=True)
+    is_published = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date_created = timezone.now()
+        self.last_updated = timezone.now()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='blog_comments')
+    user_name = models.CharField(max_length=200, default='')
+    comment_text = models.TextField(default='')
+    pub_date = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+
+    def __str__(self):
+        return f"{self.user_name} on {self.blog.title}"

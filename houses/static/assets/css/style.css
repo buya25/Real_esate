@@ -1072,8 +1072,7 @@ div.cs-select span {
 
 #map {
   width: 100%;
-  height: 500px;
-  position: relative; }
+  position: center; }
 @media screen and (max-width: 768px) {
   #map {
     height: 200px; } }

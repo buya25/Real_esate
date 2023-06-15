@@ -76,18 +76,21 @@
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li class="active"><a href="index.html">Home</a></li>
+                            <li class="active"><a href="#">Home</a></li>
 
                             <li>
-                                <a href="properties.html" class="fh5co-sub-ddown">Properties</a>
+                                <a href="#" class="fh5co-sub-ddown">Properties</a>
                                 <ul class="fh5co-sub-menu">
-                                    <!--									input for category detail-->
+                                    <!--input for category detail-->
+                                    {% for category in categories %}
+                                    <li><a href="{% url 'main:category-det' category.slug %}">{{ category.title }}</a></li>
+                                    {% endfor %}
 
                                 </ul>
                             </li>
-                            <li><a href="agent.html">Agent</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{% url 'main:agent' %}">Agent</a></li>
+                            <li><a href="{% url 'main:blog' %}">Blog</a></li>
+                            <li><a href="{% url 'main:contact' %}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -101,8 +104,7 @@
                 <ul class="slides">
 
                     {% for category in categories %}
-                        {% for title in category.listings.all %}
-                            {% if forloop.parentloop.counter <= 3 %}
+                        {% for title in category.listings.all|slice:":3" %}
 
                     <li style="background-image: url({{ title.squareImage.url }});">
                         <div class="container-fluid">
@@ -110,7 +112,7 @@
                                 <div class="col-md-4 col-md-offset-4 col-md-pull-4 js-fullheight slider-text">
                                     <div class="slider-text-inner">
                                         <div class="desc">
-                                            <span class="status">Sale</span>
+                                            <span class="status">{{ title.house_status }}</span>
                                             <h1>New House in Kenya</h1>
                                             <h2 class="price">Ksh {{ title.amount }}</h2>
                                             <p>{{ title.description|truncatewords_html:20 }}</p>
@@ -126,60 +128,10 @@
                             </div>
                         </div>
                     </li>
-                                {% endif %}
+
                             {% endfor %}
                         {% endfor %}
 
-<!--                    <li style="background-image: url({% static 'assets/images/architecture-bg.jpg' %});">-->
-<!--                        <div class="container-fluid">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-4 col-md-offset-4 col-md-pull-4 js-fullheight slider-text">-->
-<!--                                    <div class="slider-text-inner">-->
-<!--                                        <div class="desc">-->
-<!--                                            <span class="status">Rent</span>-->
-<!--                                            <h1>New House in Kenya</h1>-->
-<!--                                            <h2 class="price">$2000/mos</h2>-->
-<!--                                            <p>Far far away, behind the word mountains, far from the countries Vokalia-->
-<!--                                                and Consonantia, there live the blind texts.</p>-->
-<!--                                            <p class="details">-->
-<!--                                                <span>2000 ft sq</span>-->
-<!--                                                <span>4 Bedrooms</span>-->
-<!--                                                <span>3 Bathrooms</span>-->
-<!--                                                <span>2 Garage</span>-->
-<!--                                            </p>-->
-<!--                                            <p><a class="btn btn-primary btn-lg" href="#">Learn More</a></p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
-
-
-<!--                    <li style="background-image: url( {% static 'assets/images/kitchen.jpg' %});">-->
-<!--                        <div class="container-fluid">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-4 col-md-offset-4 col-md-pull-4 js-fullheight slider-text">-->
-<!--                                    <div class="slider-text-inner">-->
-<!--                                        <div class="desc">-->
-<!--                                            <span class="status">Sale</span>-->
-<!--                                            <h1>New House in Kenya</h1>-->
-<!--                                            <h2 class="price">12M</h2>-->
-<!--                                            <p>Far far away, behind the word mountains, far from the countries Vokalia-->
-<!--                                                and Consonantia, there live the blind texts.</p>-->
-<!--                                            <p class="details">-->
-<!--                                                <span>2000 ft sq</span>-->
-<!--                                                <span>4 Bedrooms</span>-->
-<!--                                                <span>3 Bathrooms</span>-->
-<!--                                                <span>2 Garage</span>-->
-<!--                                            </p>-->
-<!--                                            <p><a class="btn btn-primary btn-lg" href="#">Learn More</a></p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
 
                 </ul>
             </div>
@@ -209,60 +161,72 @@
                         <div class="col-xxs-12 col-xs-12">
                             <section>
                                 <label for="class">Property Type:</label>
-                                <select class="cs-select cs-skin-border input-half">
-                                    <option value="" disabled selected>Any</option>
-                                    <!--									input for details-->
+                                <select class="cs-select cs-skin-border input-half" size="5" style="overflow-y: auto;">
+                                    <!--input for details-->
+                                    {% for category in categories %}
+                                    <option value="1">{{ category.title }}</option>
+                                    {% endfor %}
                                 </select>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
-                            <div class="input-field">
+                            <section>
                                 <label for="from">Location:</label>
-                                <input type="text" class="form-control" id="from-place" placeholder="Any"/>
-                            </div>
-                        </div>
-                        <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <label for="class">Price:</label>
-                                <div class="wide">
-                                    <select class="cs-select cs-select-half cs-skin-border input-half">
-                                        <option value="" disabled selected>Any</option>
-                                        <option value="1">Building</option>
-                                        <option value="2">Office</option>
-                                    </select>
-                                </div>
+                            <select class="cs-select cs-skin-border input-half">
+                                {% for category in categories %}
+                                {% for title in category.listings.all %}
+                                <option value="1">{{ title.location }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="class">Bedrooms:</label>
-                                <div class="wide">
-                                    <select class="cs-select cs-select-half cs-skin-border input-half">
-                                        <option value="" disabled selected>Any</option>
-                                        <option value="1">Building</option>
-                                        <option value="2">Office</option>
-                                    </select>
-                                </div>
+                                <label for="from">Amount:</label>
+                            <select class="cs-select cs-skin-border input-half">
+                                {% for category in categories %}
+                                {% for title in category.listings.all %}
+                                <option value="1">{{ title.amount }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
                             <section>
-                                <label for="class">Bathrooms:</label>
-                                <div class="wide">
-                                    <select class="cs-select cs-select-half cs-skin-border input-half">
-                                        <option value="" disabled selected>Any</option>
-                                        <option value="1">Building</option>
-                                        <option value="2">Office</option>
-                                    </select>
-                                </div>
+                                <label for="from">Bedrooms:</label>
+                            <select class="cs-select cs-skin-border input-half">
+                                {% for category in categories %}
+                                {% for title in category.listings.all %}
+                                <option value="1">{{ title.bedrooms }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12">
-                            <section>
-                                <div class="input-field">
-                                    <label for="from">Area:</label>
-                                    <input type="text" class="form-control" id="from-place" placeholder="Any"/>
-                                </div>
+                             <section>
+                                <label for="from">Bathrooms:</label>
+                            <select class="cs-select cs-skin-border input-half">
+                                {% for category in categories %}
+                                {% for title in category.listings.all %}
+                                <option value="1">{{ title.bathrooms }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
+                            </section>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12">
+                           <section>
+                                <label for="from">Area:</label>
+                            <select class="cs-select cs-skin-border input-half">
+                                {% for category in categories %}
+                                {% for title in category.listings.all %}
+                                <option value="1">{{ title.area }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
                             </section>
                         </div>
                         <div class="col-xxs-12 col-xs-12 text-center">
@@ -339,6 +303,7 @@
             </div>
         </div>
 
+        <!--Popular Properties-->
         <div id="fh5co-popular-properties" class="fh5co-section-gray">
             <div class="container">
                 <div class="row">
@@ -349,33 +314,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 animate-box">
-                        <a href="#" class="fh5co-property" style="background-image: url(images/property-1.jpg);">
-                            <span class="status">Sale</span>
-                            <div class="prop-details">
-                                <span class="price">$3,000</span>
-                                <h3>Properties Near in Beach, USA California</h3>
+
+
+                    {% for category in categories %}
+                        {% for title in category.listings.all|slice:":3" %}
+                            <div class="col-md-4 animate-box">
+                                <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
+                                    <span class="status">{{ title.house_status }}</span>
+                                    <div class="prop-details">
+                                        <span class="price">Ksh {{ title.amount }}</span>
+                                        <h3>Properties Near in {{ title.area }}</h3>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4 animate-box">
-                        <a href="#" class="fh5co-property" style="background-image: url(images/property-2.jpg);">
-                            <span class="status">Rent</span>
-                            <div class="prop-details">
-                                <span class="price">$200/mos</span>
-                                <h3>Modern House at NZ</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4 animate-box">
-                        <a href="#" class="fh5co-property" style="background-image: url(images/property-3.jpg);">
-                            <span class="status">Sale</span>
-                            <div class="prop-details">
-                                <span class="price">$3,000</span>
-                                <h3>Bonggalo House</h3>
-                            </div>
-                        </a>
-                    </div>
+                        {% endfor %}
+                    {% endfor %}
+
+
                 </div>
             </div>
         </div>
@@ -387,48 +342,24 @@
                         <h2>Happy Clients</h2>
                     </div>
                 </div>
+
                 <div class="row">
+
+
+
+                   {% for user in users|slice:":3" %}
                     <div class="col-md-4">
                         <div class="box-testimony animate-box">
                             <blockquote>
                                 <span class="quote"><span><i class="icon-quotes-right"></i></span></span>
-                                <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                    Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right
-                                    at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                                <p>{{ user.comments|truncatewords_html:20 }}</p>
                             </blockquote>
-                            <p class="author">John Doe, CEO <a href="http://freehtml5.co/"
-                                                               target="_blank">FREEHTML5.co</a> <span class="subtext">Creative Director</span>
-                            </p>
+                            <p class="author">{{ user.user_name }}, {{user.job_title}} <span class="subtext">{{ user.job_title }}</span></p>
                         </div>
-
                     </div>
-                    <div class="col-md-4">
-                        <div class="box-testimony animate-box">
-                            <blockquote>
-                                <span class="quote"><span><i class="icon-quotes-right"></i></span></span>
-                                <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                    Consonantia, there live the blind texts.&rdquo;</p>
-                            </blockquote>
-                            <p class="author">John Doe, CEO <a href="http://freehtml5.co/"
-                                                               target="_blank">FREEHTML5.co</a> <span class="subtext">Creative Director</span>
-                            </p>
-                        </div>
+                {% endfor %}
 
 
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box-testimony animate-box">
-                            <blockquote>
-                                <span class="quote"><span><i class="icon-quotes-right"></i></span></span>
-                                <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                    Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right
-                                    at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                            </blockquote>
-                            <p class="author">John Doe, Founder <a href="#">FREEHTML5.co</a> <span class="subtext">Creative Director</span>
-                            </p>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -444,31 +375,30 @@
                 </div>
                 <div class="row">
 
-                    <!--Newest Properties-->
-                    {% for category in categories %}
-                        {% for title in category.listings.all %}
-                            {% if forloop.counter <= 6 %}
-                                <div class="col-md-4 animate-box">
-                                    <div class="property">
-                                        <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
-                                            <span class="status">sale</span>
-                                            <ul class="list-details">
-                                                <li>{{title.square_feet}} ft sq</li>
-                                                <li>{{ title.bedrooms }} Bedroom</li>
-                                                <li>{{ title.bathrooms }} Bathroom</li>
-                                            </ul>
-                                        </a>
-                                        <div class="property-details">
-                                            <h3>Properties Near {{title.near_location}}</h3>
-                                            <span class="price">Ksh {{title.amount}}</span>
-                                            <p>{{ title.description|truncatewords_html:20 }}</P>
-                                            <span class="address"><i class="icon-map"></i>{{ title.area }}, {{ title.location }}</span>
+                            <!-- Newest Properties -->
+                            {% for category in categories %}
+                                {% for title in category.listings.all|slice:":6" %}
+                                        <div class="col-md-4 animate-box">
+                                            <div class="property">
+                                                <a href="#" class="fh5co-property" style="background-image: url({{ title.squareImage.url }});">
+                                                    <span class="status">{{ title.house_status }}</span>
+                                                    <ul class="list-details">
+                                                        <li>{{ title.square_feet }} ft sq</li>
+                                                        <li>{{ title.bedrooms }} Bedroom</li>
+                                                        <li>{{ title.bathrooms }} Bathroom</li>
+                                                    </ul>
+                                                </a>
+                                                <div class="property-details">
+                                                    <h3>Properties Near {{ title.near_location }}</h3>
+                                                    <span class="price">Ksh {{ title.amount }}</span>
+                                                    <p>{{ title.description|truncatewords_html:20 }}</p>
+                                                    <span class="address"><i class="icon-map"></i>{{ title.area }}, {{ title.location }}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+
 
 
                 </div>
@@ -478,6 +408,7 @@
 
         <div id="fh5co-about" class="fh5co-agent">
             <div class="container">
+                <!--Agents Details shown here-->
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
                         <h3>Our Agents</h3>
@@ -486,70 +417,23 @@
                     </div>
                 </div>
                 <div class="row">
+                    {% for agent in agents|slice:":4" %}
                     <div class="col-sm-3 text-center animate-box" data-animate-effect="fadeIn">
                         <div class="fh5co-staff">
-                            <img class="img-responsive" src="images/user-1.jpg"
+                            <img class="img-responsive" src="{{ agent.profile_image.url }}"
                                  alt="Free HTML5 Templates by freeHTML5.co">
-                            <h3>Jean Smith</h3>
-                            <p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id
-                                repellat</p>
+                            <h3>{{ agent.name }}</h3>
+                            <p>{{ agent.description|truncatewords_html:20 }}</p>
                             <p class="fh5co-social-icons">
-                                <a href="#"><i class="icon-twitter2"></i></a>
-                                <a href="#"><i class="icon-facebook2"></i></a>
-                                <a href="#"><i class="icon-instagram"></i></a>
-                                <a href="#"><i class="icon-dribbble2"></i></a>
-                                <a href="#"><i class="icon-youtube"></i></a>
+                                <a href="{{ agent.twitter_link }}"><i class="icon-twitter2"></i></a>
+                                <a href="{{ agent.facebook_link }}"><i class="icon-facebook2"></i></a>
+                                <a href="{{ agent.instagram_link }}"><i class="icon-instagram"></i></a>
+                                <a href="{{ agent.youtube_link }}"><i class="icon-youtube"></i></a>
                             </p>
                         </div>
                     </div>
-                    <div class="col-sm-3 text-center animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-staff">
-                            <img class="img-responsive" src="images/user-2.jpg"
-                                 alt="Free HTML5 Templates by freeHTML5.co">
-                            <h3>Hush Raven</h3>
-                            <p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id
-                                repellat</p>
-                            <p class="fh5co-social-icons">
-                                <a href="#"><i class="icon-twitter2"></i></a>
-                                <a href="#"><i class="icon-facebook2"></i></a>
-                                <a href="#"><i class="icon-instagram"></i></a>
-                                <a href="#"><i class="icon-dribbble2"></i></a>
-                                <a href="#"><i class="icon-youtube"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 text-center animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-staff">
-                            <img class="img-responsive" src="images/user-3.jpg"
-                                 alt="Free HTML5 Templates by freeHTML5.co">
-                            <h3>Alex King</h3>
-                            <p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id
-                                repellat</p>
-                            <p class="fh5co-social-icons">
-                                <a href="#"><i class="icon-twitter2"></i></a>
-                                <a href="#"><i class="icon-facebook2"></i></a>
-                                <a href="#"><i class="icon-instagram"></i></a>
-                                <a href="#"><i class="icon-dribbble2"></i></a>
-                                <a href="#"><i class="icon-youtube"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 text-center animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-staff">
-                            <img class="img-responsive" src="images/user-4.jpg"
-                                 alt="Free HTML5 Templates by freeHTML5.co">
-                            <h3>Hush Raven</h3>
-                            <p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id
-                                repellat</p>
-                            <p class="fh5co-social-icons">
-                                <a href="#"><i class="icon-twitter2"></i></a>
-                                <a href="#"><i class="icon-facebook2"></i></a>
-                                <a href="#"><i class="icon-instagram"></i></a>
-                                <a href="#"><i class="icon-dribbble2"></i></a>
-                                <a href="#"><i class="icon-youtube"></i></a>
-                            </p>
-                        </div>
-                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>
@@ -565,6 +449,8 @@
                 </div>
             </div>
             <div class="container">
+                <!--Recent Blogs in the system-->
+                {% for blog in blogs|slice:":3" %}
                 <div class="row row-bottom-padded-md">
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="fh5co-blog animate-box">
@@ -572,48 +458,19 @@
                             <div class="blog-text">
                                 <div class="prod-title">
                                     <h3><a href="#">Properties for sale</a></h3>
-                                    <span class="posted_by">Sep. 15th</span>
-                                    <span class="comment"><a href="">21<i class="icon-bubble2"></i></a></span>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts.</p>
+                                    <span class="posted_by">{{ blog.publication_date }}</span>
+                                    <span class="comment"><a href="">{{ blog.comments }}<i class="icon-bubble2"></i></a></span>
+                                    <p>{{ blog.content|truncatewords_html:20 }}</p>
                                     <p><a href="#">Learn More...</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="fh5co-blog animate-box">
-                            <a href="#"><img class="img-responsive" src="images/property-2.jpg" alt=""></a>
-                            <div class="blog-text">
-                                <div class="prod-title">
-                                    <h3><a href="#">Modern Home</a></h3>
-                                    <span class="posted_by">Sep. 15th</span>
-                                    <span class="comment"><a href="">21<i class="icon-bubble2"></i></a></span>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts.</p>
-                                    <p><a href="#">Learn More...</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix visible-sm-block"></div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="fh5co-blog animate-box">
-                            <a href="#"><img class="img-responsive" src="images/property-3.jpg" alt=""></a>
-                            <div class="blog-text">
-                                <div class="prod-title">
-                                    <h3><a href="#">15% Deal Discount For House</a></h3>
-                                    <span class="posted_by">Sep. 15th</span>
-                                    <span class="comment"><a href="">21<i class="icon-bubble2"></i></a></span>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts.</p>
-                                    <p><a href="#">Learn More...</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    {% endfor %}
                     <div class="clearfix visible-md-block"></div>
                 </div>
+            </div>
             </div>
         </div>
         <!-- fh5co-blog-section -->
@@ -689,22 +546,6 @@
                                 <li><a href="#">Privacy &amp; Policy</a></li>
                                 <li><a href="#">Contact Us</a></li>
                             </ul>
-                        </div>
-                        <div class="col-md-3">
-                            <h3 class="section-title">Newsletter</h3>
-                            <p>Subscribe for our newsletter</p>
-                            <form class="form-inline" id="fh5co-header-subscribe">
-                                <div class="row">
-                                    <div class="col-md-12 col-md-offset-0">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="email"
-                                                   placeholder="Enter your email">
-                                            <button type="submit" class="btn btn-default"><i
-                                                    class="icon-paper-plane"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                     <div class="row">
