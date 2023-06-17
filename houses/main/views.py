@@ -1,6 +1,8 @@
 import json
 
 from django.core.mail import send_mail
+from django.http import HttpResponse
+from twilio.twiml.messaging_response import MessagingResponse
 from django.http import JsonResponse
 from django.urls import path
 from django.shortcuts import render, get_object_or_404, redirect
@@ -147,3 +149,4 @@ def contact_form(request):
         return render(request, 'success.html')  # Render a success page
 
     return render(request, 'contact_form.html')  # Render the contact form template
+
