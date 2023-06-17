@@ -24,7 +24,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'yabsmullo0@gmail.com'
 EMAIL_HOST_PASSWORD = '782sL$3Un#3DwFLKrsxShHc@m2#o#2'
-EMAIL_USE_TLS = True  # or False if your SMTP server doesn't use TLS
+EMAIL_USE_TLS = False  # or False if your SMTP server doesn't use TLS
 DEFAULT_FROM_EMAIL = 'default@gmail.com'
 
 
