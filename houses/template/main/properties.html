@@ -68,6 +68,8 @@
             justify-content: center;
             align-items: center;
         }
+
+
     </style>
 
 </head>
@@ -79,7 +81,8 @@
             <div class="container">
                 <div class="nav-header">
                     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-                    <h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Discava<span>Properties</span></a></h1>
+                    <h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Discava<span>Properties</span></a>
+                    </h1>
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
@@ -114,7 +117,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h2 class="heading-title">{{category.title}}</h2>
+                                        <h2 class="heading-title">{{ category.title }}</h2>
                                         <p class="fh5co-lead">Gallery <i class="icon-heart3"></i> Details</p>
                                     </div>
                                 </div>
@@ -140,7 +143,7 @@
                     {% for title in titles %}
                     <div class="col-md-4 animate-box">
                         <div class="property">
-                            <a href="#" class="fh5co-property"
+                            <a href="{{ title.squareImage.url }}" class="fh5co-property fh5co-property-popup"
                                style="background-image: url({{ title.squareImage.url }});">
                                 <span class="status">{{ title.house_status }}</span>
                                 <ul class="list-details">
@@ -160,10 +163,10 @@
                     </div>
                     {% endfor %}
                     {% else %}
-                         <!-- Display "No House Details Uploaded for this category" message -->
-                        <div class="center-message">
-                            <h2>No House Details Uploaded for this category</h2>
-                        </div>
+                    <!-- Display "No House Details Uploaded for this category" message -->
+                    <div class="center-message">
+                        <h2>No House Details Uploaded for this category</h2>
+                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -217,6 +220,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </footer>
 
 
@@ -248,10 +252,23 @@
 <script src="{% static 'assets/js/classie.js' %}"></script>
 <script src="{% static 'assets/js/selectFx.js' %}"></script>
 
-
 <!-- Main JS -->
 <script src="{% static 'assets/js/main.js' %}"></script>
 
+<!-- Include Magnific Popup script and initialize the gallery-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.fh5co-property-popup').magnificPopup({
+        type: 'image',
+        gallery: {
+            enabled: true
+        }
+    });
+});
+</script>
 </body>
 </html>
 

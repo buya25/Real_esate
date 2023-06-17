@@ -141,10 +141,18 @@ class Blog(models.Model):
         self.save()
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.date_created = timezone.now()
-        self.last_updated = timezone.now()
-        super().save(*args, **kwargs)
+        if self.date_created is None:
+            self.date_created = timezone.localtime(timezone.now())
+        if self.uniqueId is None:
+            self.uniqueId = str(uuid4()).split('-')[4]
+
+        # Generate the slug based on the title and category name
+        category_name = self.categories.first().title if self.categories.exists() else ''
+        self.slug = slugify('{} {} {}'.format(self.title, category_name, self.uniqueId))
+
+        self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
+        self.last_updated = timezone.localtime(timezone.now())
+        super(Blog, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -155,7 +163,7 @@ class Comment(models.Model):
     user_name = models.CharField(max_length=200, default='')
     comment_text = models.TextField(default='')
     pub_date = models.DateTimeField(auto_now_add=True)
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies_to')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Save the comment first
@@ -169,3 +177,20 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user_name} on {self.blog.title}"
+
+
+class Reply(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
+    user_name = models.CharField(max_length=200, default='')
+    reply_text = models.TextField(default='')
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the reply first
+
+        # Update the parent comment's last_updated field
+        self.comment.pub_date = self.pub_date
+        self.comment.save()
+
+    def __str__(self):
+        return f"{self.user_name} in reply to {self.comment.user_name} on {self.comment.blog.title}"

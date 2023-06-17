@@ -103,7 +103,7 @@
         <aside id="fh5co-hero" class="js-fullheight">
             <div class="flexslider js-fullheight">
                 <ul class="slides">
-                    <li style="background-image: url({% static 'assets/images/real-estate.jpeg' %});">
+                    <li style="background-image: url(images/img_bg_3.jpg);">
                         <div class="overlay"></div>
                         <div class="container-fluid">
                             <div class="row">
@@ -130,7 +130,8 @@
                             <br>– Kerry Stokes.</p>
                     </div>
                 </div>
-                <form action="#">
+                <form method="post" action="{% url 'main:contact_form' %}">
+                     {% csrf_token %}
                     <div class="row animate-box">
                         <div class="col-md-6">
                             <h3 class="section-title">Our Address</h3>
@@ -147,17 +148,17 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name">
+                                        <input type="text" name="name" class="form-control" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email">
+                                        <input type="text" name="email" class="form-control" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea name="" class="form-control" id="" cols="30" rows="7"
+                                        <textarea name="message" class="form-control" id="" cols="30" rows="7"
                                                   placeholder="Message"></textarea>
                                     </div>
                                 </div>
@@ -225,7 +226,7 @@
                                 <a href="#"><i class="icon-youtube"></i></a>
                             </p>
                             <p>Copyright 2023<a href="#">Module</a>. All Rights Reserved. <br>Made with <i
-                                    class="icon-heart3"></i> by <a href="http://lizyaver.com" target="_blank">lizyaver.com</a>                                        href="http://blog.gessato.com/" target="_blank">Gessato</a></p>
+                                    class="icon-heart3"></i> by <a href="http://lizyaver.com" target="_blank">lizyaver.com</a></p>
                         </div>
                     </div>
                 </div>

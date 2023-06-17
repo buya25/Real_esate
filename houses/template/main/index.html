@@ -57,6 +57,7 @@
     <style>
         #fh5co-search-map{
             margin-top: 10px;
+            display: flex;
             justify-content: center;
         }
 
@@ -377,6 +378,7 @@
                                     <span class="comment">
 													<a href="#" onclick="toggleCommentInput(event, '{{ blog.id }}')">{{ blog.comments }}<i
                                                             class="icon-bubble2"></i></a>
+                                                {{ blog.views }} <i class="icon-eye"></i>
 												</span>
                                     <p>{{ blog.content|truncatewords_html:20 }}</p>
                                     <p><a href="#">Learn More...</a></p>
