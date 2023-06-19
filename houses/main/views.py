@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from twilio.twiml.messaging_response import MessagingResponse
@@ -12,6 +13,12 @@ from .models import *
 
 
 # Create your views here.
+@staff_member_required
+def admin_section(request):
+    # Your admin section logic here
+    # This code will only be executed if the user has admin access
+    return redirect('admin:index')  # Redirect to the admin index page
+
 
 def home(request):
     categories = Category.objects.all()
@@ -149,4 +156,3 @@ def contact_form(request):
         return render(request, 'success.html')  # Render a success page
 
     return render(request, 'contact_form.html')  # Render the contact form template
-
