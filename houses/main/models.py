@@ -92,6 +92,14 @@ class Title(models.Model):
         super(Title, self).save(*args, **kwargs)
 
 
+class Image(models.Model):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='property_images')
+
+    def __str__(self):
+        return self.image.name
+
+
 class Client(models.Model):
     user_name = models.CharField(max_length=200, null=True, blank=True, default='Anonymous')
     email = models.EmailField(null=True, blank=True, default='')
@@ -163,7 +171,8 @@ class Comment(models.Model):
     user_name = models.CharField(max_length=200, default='')
     comment_text = models.TextField(default='')
     pub_date = models.DateTimeField(auto_now_add=True)
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies_to')
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,
+                                       related_name='replies_to')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Save the comment first
